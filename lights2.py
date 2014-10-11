@@ -17,21 +17,20 @@ SleepTimeL = 2
 
 # main loop
 try:
-  while True:
+    while True:
+        for i in pinList:
+            GPIO.output(i, GPIO.HIGH)
+            time.sleep(SleepTimeL);
+            GPIO.output(i, GPIO.LOW)
 
-    for i in pinList:
-        GPIO.output(i, GPIO.HIGH)
-        time.sleep(SleepTimeL);
-        GPIO.output(i, GPIO.LOW)
+        pinList.reverse()
 
-    pinList.reverse()
+        for i in pinList:
+            GPIO.output(i, GPIO.HIGH)
+            time.sleep(SleepTimeL);
+            GPIO.output(i, GPIO.LOW)
 
-    for i in pinList:
-        GPIO.output(i, GPIO.HIGH)
-        time.sleep(SleepTimeL);
-        GPIO.output(i, GPIO.LOW)
-
-    pinList.reverse()
+        pinList.reverse()
 
 # End program cleanly with keyboard
 except KeyboardInterrupt:
