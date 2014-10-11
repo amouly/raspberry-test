@@ -17,21 +17,21 @@ SleepTimeL = 2
 
 # main loop
 try:
-    time.sleep(SleepTimeL);
-    GPIO.output(21, GPIO.LOW)
-    print("ONE")
-    time.sleep(SleepTimeL);
-    GPIO.output(22, GPIO.LOW)
-    print("TWO")
-    time.sleep(SleepTimeL);
-    GPIO.output(23, GPIO.LOW)
-    print("THREE")
-    time.sleep(SleepTimeL);
-    GPIO.output(24, GPIO.LOW)
-    print("FOUR")
-    time.sleep(SleepTimeL);
-    GPIO.cleanup()
-    print("Good bye!")
+  while True:
+
+    for i in pinList:
+        GPIO.output(i, GPIO.HIGH)
+        time.sleep(SleepTimeL);
+        GPIO.output(i, GPIO.LOW)
+
+    pinList.reverse()
+
+    for i in pinList:
+        GPIO.output(i, GPIO.HIGH)
+        time.sleep(SleepTimeL);
+        GPIO.output(i, GPIO.LOW)
+
+    pinList.reverse()
 
 # End program cleanly with keyboard
 except KeyboardInterrupt:
