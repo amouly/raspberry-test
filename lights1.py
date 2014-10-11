@@ -18,23 +18,23 @@ for i in pinList:
 # main loop
 try:
     GPIO.output(2, GPIO.LOW)
-    print "ONE"
+    print("ONE")
     time.sleep(SleepTimeL);
     GPIO.output(3, GPIO.LOW)
-    print "TWO"
+    print("TWO")
     time.sleep(SleepTimeL);
     GPIO.output(4, GPIO.LOW)
-    print "THREE"
+    print("THREE")
     time.sleep(SleepTimeL);
     GPIO.output(5, GPIO.LOW)
-    print "FOUR"
+    print("FOUR")
     time.sleep(SleepTimeL);
     GPIO.cleanup()
-    print "Good bye!"
+    print("Good bye!")
 
 # End program cleanly with keyboard
 except KeyboardInterrupt:
-    print "  Quit"
+    print("Quit")
 
     # Reset GPIO settings
     GPIO.cleanup()
