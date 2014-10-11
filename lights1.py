@@ -17,16 +17,16 @@ for i in pinList:
 
 # main loop
 try:
-    GPIO.output(2, GPIO.LOW)
+    GPIO.output(21, GPIO.LOW)
     print("ONE")
     time.sleep(SleepTimeL);
-    GPIO.output(3, GPIO.LOW)
+    GPIO.output(22, GPIO.LOW)
     print("TWO")
     time.sleep(SleepTimeL);
-    GPIO.output(4, GPIO.LOW)
+    GPIO.output(23, GPIO.LOW)
     print("THREE")
     time.sleep(SleepTimeL);
-    GPIO.output(5, GPIO.LOW)
+    GPIO.output(24, GPIO.LOW)
     print("FOUR")
     time.sleep(SleepTimeL);
     GPIO.cleanup()
