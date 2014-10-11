@@ -22,7 +22,7 @@ try:
     print("ONE")
 
     time.sleep(SleepTimeL);
-    GPIO.output(22, GPIO.LOW)
+    GPIO.output(1, GPIO.LOW)
     print("TWO")
 
     time.sleep(SleepTimeL);
