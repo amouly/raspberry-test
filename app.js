@@ -2,10 +2,15 @@ var http = require('http');
 var gpio = require("pi-gpio");
 
 
-gpio.open(23, "output", function(err) {        // Open pin 16 for output
-    gpio.write(23, 1, function() {            // Set pin 16 high (1)
-        gpio.close(23);                        // Close pin 16
+gpio.open(16, "output", function(err) {        // Open pin 16 for output
+    gpio.write(16, 1, function() {            // Set pin 16 high (1)
+        gpio.close(16);                        // Close pin 16
     });
+});
+
+gpio.read(16, function(err, value) {
+    if(err) throw err;
+    console.log(value);    // The current state of the pin
 });
 
 
