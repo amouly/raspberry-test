@@ -1,9 +1,12 @@
-/*global require,console*/
+/*jslint node: true */
+/*global console*/
 var http = require('http');
 var gpio = require("pi-gpio");
+var Router = require('node-simple-router');
 
 var pins = [12, 16, 18, 22];
 var i;
+var router = new Router();
 
 function show(pin) {
     'use strict';
@@ -24,14 +27,21 @@ pins.forEach(function (pin) {
     show(pin);
 });
 
-http.createServer(function (request, response) {
+router.get("/hello", function (request, response) {
     'use strict';
 
+    response.end("Hello, World!");
+});
+
+var server = http.createServer(router);
+
+server.listen(8000);
+
+/*
+http.createServer(function (request, response) {
     response.writeHead(200, {'Content-Type': 'text/plain'});
     response.end('Hello World!\n');
 }).listen(8000);
+*/
 
-console.log('Web Server running at http://127.0.0.1:8000');
-
-
-
+console.log('Web Server running');
