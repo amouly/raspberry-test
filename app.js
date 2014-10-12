@@ -14,6 +14,8 @@ function show(pin) {
     gpio.open(pin, "output", function (err) {
         // Set pin to high (1)
         gpio.write(pin, 1, function () {
+            gpio.close(pin);
+
             console.log("Show: " + 1);
         });
     });
