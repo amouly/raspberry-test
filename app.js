@@ -27,19 +27,16 @@ router.get("/pin/:id", function (request, response) {
         text;
 
     response.writeHead(200, {'Content-Type': 'text/plain'});
-    response.end();
 
     //Chek if the reques pin exist
-    pins.contains(pin, function (found) {
-        if (found) {
-            text = "Pin Number: " + pin + " found";
+    if (pins.indexOf(pin) >= 0) {
+        text = "Pin Number: " + pin + " found";
 
-            //Start pin
-            show(pin);
-        } else {
-            text = "Pin Number: " + pin + " not found";
-        }
-    });
+        //Start pin
+        show(pin);
+    } else {
+        text = "Pin Number: " + pin + " not found";
+    }
 
     response.end(text);
 });
