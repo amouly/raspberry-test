@@ -8,22 +8,22 @@ var http = require('http'),
 
 function activate(pin) {
     'use strict';
+    var state;
 
     //Use the selected pin
     gpio.open(pin, "output", function (err) {
 
         //Read the state of the pin
         gpio.read(pin, function (err, value) {
-            var newValue,
-                text;
+            var newValue;
 
             if (value === 1) {
                 newValue = 0;
-                text = "OFF";
+                state = "OFF";
 
             } else if (value === 0) {
                 newValue = 1;
-                text = "ON";
+                state = "ON";
             }
 
             // Set pin to the new value
@@ -32,10 +32,10 @@ function activate(pin) {
                     console.log("Show: " + pin);
                 });
             });
-
-            return text;
         });
     });
+
+    return state;
 }
 
 //Liten to pin request
