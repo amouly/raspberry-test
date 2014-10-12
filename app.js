@@ -42,7 +42,9 @@ router.get("/pin/:id/:action", function (request, response) {
             setAction(pinId, 0);
         }
 
-        text = "Pin Number: " + pinId + " found - State: " + pinAction;
+        gpio.read(pinId, function (err, value) {
+            text = "Pin Number: " + pinId + " found - State: " + value;
+        });
     } else {
         text = "Pin Number: " + pinId + " not found";
     }
