@@ -43,13 +43,13 @@ router.get("/pin/:id/:action", function (request, response) {
         }
 
         gpio.read(pinId, function (err, value) {
-            text = "Pin Number: " + pinId + " found - State: " + value;
+            response.write("Pin Number: " + pinId + " found - State: " + value);
         });
     } else {
-        text = "Pin Number: " + pinId + " not found";
+        response.write("Pin Number: " + pinId + " not found");
     }
 
-    response.end(text);
+    response.end("end");
 });
 
 var server = http.createServer(router);
