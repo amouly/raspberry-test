@@ -23,7 +23,7 @@ function show(pin) {
 
 router.get("/pin/:id", function (request, response) {
     'use strict';
-    var pin = parseInt(request.params.id, 2),
+    var pin = parseInt(request.params.id, 10),
         text;
 
     response.writeHead(200, {'Content-Type': 'text/plain'});
