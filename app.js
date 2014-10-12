@@ -39,7 +39,7 @@ router.get("/pin/:id/:action", function (request, response) {
         if (pinAction) {
             setAction(pinId, 1);
         } else {
-            setAction(pinId, 2);
+            setAction(pinId, 0);
         }
 
         text = "Pin Number: " + pinId + " found - State: " + pinAction;
