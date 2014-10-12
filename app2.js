@@ -2,26 +2,32 @@
 /*global console*/
 var http = require('http'),
     gpio = require('rpi-gpio'),
+    async = require('async'),
     Router = require('node-simple-router'),
     router = new Router(),
     pins = [12, 16, 18, 22];
 
-function setAction(pin, value) {
+
+
+
+function readInput(pinId) {
     'use strict';
-
-    //Use the selected pin
-    gpio.open(pin, "output", function (err) {
-
-        // Set pin to the new value
-        gpio.write(pin, value, function () {
-
-            //Close connection
-            gpio.close(pin, function () {
-                console.log("Show: " + pin);
-            });
+    /*
+    gpio.setup(pinI, gpio.DIR_IN, function () {
+        gpio.read(pinI, function(err, value) {
+            console.log('The value is ' + value);
         });
     });
+    */
+    return pinId + 1;
 }
+
+
+
+
+
+
+
 
 //Liten to pin request
 router.get("/", function (request, response) {
@@ -29,12 +35,10 @@ router.get("/", function (request, response) {
 
     response.writeHead(200, {'Content-Type': 'text/plain'});
 
-    pins.forEach(function (pin) {
-        gpio.read(pin, function (err, value) {
-            response.write("Pin Number: " + pin + " found - State: " + value);
+    async.map(pins, readInput, function (err, results) {
 
-            return value;
-        });
+        console.log(results);
+
     });
 
     response.end("end");
@@ -51,20 +55,14 @@ router.get("/pin/:id/:action", function (request, response) {
     response.writeHead(200, {'Content-Type': 'text/plain'});
 
     //Chek if the reques pin exist
+    /*
     if (pins.indexOf(pinId) >= 0) {
 
-        if (pinAction) {
-            setAction(pinId, 1);
-        } else {
-            setAction(pinId, 0);
-        }
 
-        gpio.read(pinId, function (err, value) {
-            response.write("Pin Number: " + pinId + " found - State: " + value);
-        });
     } else {
         response.write("Pin Number: " + pinId + " not found");
     }
+    */
 
     response.end("end");
 });
