@@ -16,7 +16,7 @@ function show(pin) {
         gpio.write(pin, 1, function () {
             gpio.close(pin);
 
-            console.log("Show: " + 1);
+            console.log("Show: " + pin);
         });
     });
 }
@@ -39,6 +39,7 @@ router.get("/pin/:id", function (request, response) {
     'use strict';
     var pin = request.params.id;
 
+    response.writeHead(200, {'Content-Type': 'text/plain'});
     response.end("Pin Number: " + pin);
 
     show(pin);
@@ -47,12 +48,5 @@ router.get("/pin/:id", function (request, response) {
 var server = http.createServer(router);
 
 server.listen(8000);
-
-/*
-http.createServer(function (request, response) {
-    response.writeHead(200, {'Content-Type': 'text/plain'});
-    response.end('Hello World!\n');
-}).listen(8000);
-*/
 
 console.log('Web Server running');
