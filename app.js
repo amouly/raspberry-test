@@ -30,9 +30,13 @@ router.get("/", function (request, response) {
     response.writeHead(200, {'Content-Type': 'text/plain'});
 
     pins.forEach(function (pin) {
-        gpio.read(pin, function (err, value) {
+        var readState = gpio.read(pin, function (err, value) {
             response.write("Pin Number: " + pin + " found - State: " + value);
+
+            return value;
         });
+
+        response.write(readState);
     });
 
     response.end("end");
