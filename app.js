@@ -6,7 +6,7 @@ var http = require('http'),
     router = new Router(),
     pins = [12, 16, 18, 22];
 
-function show(pin) {
+function activate(pin) {
     'use strict';
 
     //Use the selected pin
@@ -14,13 +14,16 @@ function show(pin) {
 
         //Read the state of the pin
         gpio.read(pin, function (err, value) {
-            var newValue;
+            var newValue,
+                text;
 
             if (value === 1) {
                 newValue = 0;
+                text = "OFF";
 
             } else if (value === 0) {
                 newValue = 1;
+                text = "ON";
             }
 
             // Set pin to the new value
@@ -29,6 +32,8 @@ function show(pin) {
                     console.log("Show: " + pin);
                 });
             });
+
+            return text;
         });
     });
 }
@@ -38,16 +43,18 @@ router.get("/pin/:id", function (request, response) {
     'use strict';
 
     var pin = parseInt(request.params.id, 10),
-        text;
+        text,
+        state;
 
     response.writeHead(200, {'Content-Type': 'text/plain'});
 
     //Chek if the reques pin exist
     if (pins.indexOf(pin) >= 0) {
-        text = "Pin Number: " + pin + " found";
 
         //Start pin
-        show(pin);
+        state = activate(pin);
+
+        text = "Pin Number: " + pin + " found - State: " + state;
     } else {
         text = "Pin Number: " + pin + " not found";
     }
