@@ -35,7 +35,7 @@ router.get("/", function (request, response) {
 
     response.writeHead(200, {'Content-Type': 'text/plain'});
 
-    async.map(pins, readInput, function (err, results) {
+    async.map(pins, function () { return "1"; }, function (err, results) {
 
         console.log(results);
         console.log("test");
