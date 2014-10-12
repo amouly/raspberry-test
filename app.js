@@ -34,6 +34,8 @@ router.get("/", function (request, response) {
             response.write("Pin Number: " + pin + " found - State: " + value);
         });
     });
+
+    response.end("end");
 });
 
 //Liten to pin request
