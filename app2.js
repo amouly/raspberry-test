@@ -38,7 +38,7 @@ router.get("/", function (request, response) {
     async.map(pins, readInput, function (err, results) {
 
         console.log(results);
-
+        console.log("test");
     });
 
     response.end("end");
