@@ -13,24 +13,31 @@ function show(pin) {
 
     gpio.open(pin, "output", function (err) {
         // Set pin to high (1)
-        gpio.write(pin, 1, function () {
-            //gpio.close(pin);
-
-            console.log("Show Pin: " + pin);
-        });
+        gpio.write(pin, 1);
     });
 }
 
+/*
 pins.forEach(function (pin) {
     'use strict';
 
     show(pin);
 });
+*/
 
 router.get("/hello", function (request, response) {
     'use strict';
 
     response.end("Hello, World!");
+});
+
+router.get("/pin/:id", function (request, response) {
+    'use strict';
+    var pin = request.params.id;
+
+    response.end("Pin Number: " + pin);
+
+    show(pin);
 });
 
 var server = http.createServer(router);
