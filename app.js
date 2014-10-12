@@ -12,6 +12,8 @@ function show(pin) {
         // Set pin to high (1)
         gpio.write(pin, 1, function () {
             gpio.close(pin);
+
+            console.log("Show Pin: " + pin);
         });
     });
 }
@@ -21,14 +23,6 @@ pins.forEach(function (pin) {
 
     show(pin);
 });
-
-gpio.read(16, function (err, value) {
-    'use strict';
-
-    if (err) { throw err; }
-    console.log(value);    // The current state of the pin
-});
-
 
 http.createServer(function (request, response) {
     'use strict';
