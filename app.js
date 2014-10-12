@@ -6,57 +6,45 @@ var http = require('http'),
     router = new Router(),
     pins = [12, 16, 18, 22];
 
-function activate(pin) {
+function setAction(pin, value) {
     'use strict';
-    var state;
 
     //Use the selected pin
     gpio.open(pin, "output", function (err) {
 
-        //Read the state of the pin
-        gpio.read(pin, function (err, value) {
-            var newValue;
+        // Set pin to the new value
+        gpio.write(pin, value, function () {
 
-            if (value === 1) {
-                newValue = 0;
-                state = "OFF";
-
-            } else if (value === 0) {
-                newValue = 1;
-                state = "ON";
-            }
-
-            // Set pin to the new value
-            gpio.write(pin, newValue, function () {
-                gpio.close(pin, function () {
-                    console.log("Show: " + pin);
-                });
+            //Close connection
+            gpio.close(pin, function () {
+                console.log("Show: " + pin);
             });
         });
     });
-
-    return state;
 }
 
 //Liten to pin request
-router.get("/pin/:id", function (request, response) {
+router.get("/pin/:id/:action", function (request, response) {
     'use strict';
 
-    var pin = parseInt(request.params.id, 10),
+    var pinId = parseInt(request.params.id, 10),
         text,
-        state;
+        pinAction = request.params.action;
 
     response.writeHead(200, {'Content-Type': 'text/plain'});
 
     //Chek if the reques pin exist
-    if (pins.indexOf(pin) >= 0) {
+    if (pins.indexOf(pinId) >= 0) {
 
-        //Start pin
-        state = activate(pin);
+        if (pinAction) {
+            setAction(pinId, 1);
+        } else {
+            setAction(pinId, 2);
+        }
 
-        text = "Pin Number: " + pin + " found - State: " + state;
+        text = "Pin Number: " + pinId + " found - State: " + pinAction;
     } else {
-        text = "Pin Number: " + pin + " not found";
+        text = "Pin Number: " + pinId + " not found";
     }
 
     response.end(text);
