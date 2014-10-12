@@ -1,28 +1,42 @@
 /*jslint node: true */
 /*global console*/
-var http = require('http');
-var gpio = require("pi-gpio");
-var Router = require('node-simple-router');
-
-var pins = [12, 16, 18, 22];
-var i;
-var router = new Router();
+var http = require('http'),
+    gpio = require("pi-gpio"),
+    Router = require('node-simple-router'),
+    router = new Router(),
+    pins = [12, 16, 18, 22];
 
 function show(pin) {
     'use strict';
 
+    //Use the selected pin
     gpio.open(pin, "output", function (err) {
-        // Set pin to high (1)
-        gpio.write(pin, 1, function () {
-            gpio.close(pin, function () {
-                console.log("Show: " + pin);
+
+        //Read the state of the pin
+        gpio.read(pin, function (err, value) {
+            var newValue;
+
+            if (value === 1) {
+                newValue = 0;
+
+            } else if (value === 0) {
+                newValue = 1;
+            }
+
+            // Set pin to the new value
+            gpio.write(pin, newValue, function () {
+                gpio.close(pin, function () {
+                    console.log("Show: " + pin);
+                });
             });
         });
     });
 }
 
+//Liten to pin request
 router.get("/pin/:id", function (request, response) {
     'use strict';
+
     var pin = parseInt(request.params.id, 10),
         text;
 
