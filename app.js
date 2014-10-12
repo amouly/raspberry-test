@@ -24,6 +24,19 @@ function setAction(pin, value) {
 }
 
 //Liten to pin request
+router.get("/", function (request, response) {
+    'use strict';
+
+    response.writeHead(200, {'Content-Type': 'text/plain'});
+
+    pins.forEach(function (pin) {
+        gpio.read(pin, function (err, value) {
+            response.write("Pin Number: " + pin + " found - State: " + value);
+        });
+    });
+});
+
+//Liten to pin request
 router.get("/pin/:id/:action", function (request, response) {
     'use strict';
 
